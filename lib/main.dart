@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/anwser.dart';
 import 'package:quiz/question.dart';
 
 void main() => runApp(QuizApp());
@@ -21,7 +22,21 @@ class _QuizState extends State<QuizApp> {
 
   @override
   Widget build(BuildContext context) {
-    var questions = ['One', 'Two', 'Three'];
+    const questions = [
+      {
+        'question': 'Eh?',
+        'answers': ['Poutine.'],
+      },
+      {
+        'question': 'Huh?',
+        'answers': ['Mythical cheese'],
+      },
+      {
+        'question': 'Wee?',
+        'answers': ['Goat'],
+      },
+    ];
+
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
@@ -29,11 +44,12 @@ class _QuizState extends State<QuizApp> {
           ),
           body: Column(children: [
             Question(
-              questions.elementAt(_questionIndex),
+              questions[_questionIndex]['question'],
             ),
-            RaisedButton(child: Text('Answer 1'), onPressed: _answerQuestion),
-            RaisedButton(child: Text('Answer 2'), onPressed: _answerQuestion),
-            RaisedButton(child: Text('Answer 3'), onPressed: _answerQuestion),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(_answerQuestion, answer);
+            }).toList()
           ])),
     );
   }
