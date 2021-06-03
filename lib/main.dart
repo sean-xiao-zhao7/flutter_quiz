@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/anwser.dart';
-import 'package:quiz/question.dart';
+import 'package:quiz/quiz.dart';
+import 'package:quiz/result.dart';
 
 void main() => runApp(QuizApp());
 
@@ -13,44 +13,45 @@ class QuizApp extends StatefulWidget {
 
 class _QuizState extends State<QuizApp> {
   var _questionIndex = 0;
+  final _questions = const [
+    {
+      'question': 'Eh?',
+      'answers': ['Poutine.'],
+    },
+    {
+      'question': 'Huh?',
+      'answers': ['Mythical cheese'],
+    },
+    {
+      'question': 'Wee?',
+      'answers': ['Goat'],
+    },
+  ];
 
   void _answerQuestion() {
     setState(() {
       _questionIndex += 1;
     });
+    // if (_questionIndex >= questions.length) {
+    //   setState(() {
+    //     _questionIndex = 0;
+    //   });
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    const questions = [
-      {
-        'question': 'Eh?',
-        'answers': ['Poutine.'],
-      },
-      {
-        'question': 'Huh?',
-        'answers': ['Mythical cheese'],
-      },
-      {
-        'question': 'Wee?',
-        'answers': ['Goat'],
-      },
-    ];
-
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
             title: Text('Quiz'),
           ),
-          body: Column(children: [
-            Question(
-              questions[_questionIndex]['question'],
-            ),
-            ...(questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) {
-              return Answer(_answerQuestion, answer);
-            }).toList()
-          ])),
+          body: (_questionIndex < _questions.length)
+              ? QuizWidget(
+                  questions: _questions,
+                  answerQuestion: _answerQuestion,
+                  questionIndex: _questionIndex)
+              : Result()),
     );
   }
 }
