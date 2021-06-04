@@ -16,10 +16,10 @@ class Result extends StatelessWidget {
         child: Column(children: <Widget>[
       Text(resultPhrase,
           style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-      TextButton(
+      ElevatedButton(
           child: Text('Restart'),
           style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all(Colors.blue)),
+              foregroundColor: MaterialStateProperty.all(Colors.white)),
           onPressed: () => restart()),
     ]));
   }
